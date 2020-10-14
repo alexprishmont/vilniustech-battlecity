@@ -17,10 +17,7 @@ public class MenuForm implements FormProvider {
     private JButton exitBtn;
 
     public MenuForm() {
-        playGameBtn.addActionListener(event -> {
-            GUI.getInstance().switchContentPane(new GameForm());
-        });
-
+        playGameBtn.addActionListener(event -> GUI.getInstance().switchContentPane(new GameForm()));
         exitBtn.addActionListener(event -> System.exit(0));
 
         form = this;

@@ -7,8 +7,7 @@ import java.awt.*;
 public abstract class Obstacle implements GameGraphics {
     protected int x;
     protected int y;
-
-    protected static Image[] images = null;
+    protected float health = 100f;
 
     public int getX() {
         return x;
@@ -24,5 +23,13 @@ public abstract class Obstacle implements GameGraphics {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public void setHealth(float health) {
+        this.health = health;
     }
 }

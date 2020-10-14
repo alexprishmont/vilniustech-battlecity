@@ -3,13 +3,13 @@ package lt.vilniustech.battlecity.eventmanager.events;
 import lt.vilniustech.battlecity.eventmanager.Event;
 
 public class KeyPressed extends Event {
-    private final String pressedKey;
+    private final char pressedKey;
 
-    public KeyPressed(String pressedKeyCode) {
+    public KeyPressed(char pressedKeyCode) {
         pressedKey = pressedKeyCode;
     }
 
-    public String getPressedKey() {
+    public char getPressedKey() {
         return pressedKey;
     }
 }

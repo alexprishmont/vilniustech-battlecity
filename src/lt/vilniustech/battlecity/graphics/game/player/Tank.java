@@ -7,14 +7,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Tank implements GameGraphics {
-    public static final int WIDTH = 35;
-    public static final int LENGTH = 35;
+    public static final int WIDTH = 20;
+    public static final int LENGTH = 20;
+
     protected static Image[] images = null;
 
-    protected Map<String, Image> tankDirections = new HashMap<String, Image>();
-    protected String currentDirection = "U";
+    protected Map<String, Image> tankDirections = new HashMap<>();
+    protected String currentDirection = DIRECTION_UP;
     protected int x;
     protected int y;
+
+    public static final String DIRECTION_UP = "U";
+    public static final String DIRECTION_DOWN = "D";
+    public static final String DIRECTION_LEFT = "L";
+    public static final String DIRECTION_RIGHT = "R";
 
     public Tank(int x, int y) {
         this.x = x;
@@ -28,7 +34,7 @@ public abstract class Tank implements GameGraphics {
 
     @Override
     public void draw(Graphics graphics) {
-        graphics.drawImage(tankDirections.get(currentDirection), x, y, null);
+        graphics.drawImage(tankDirections.get(currentDirection), x, y, WIDTH, LENGTH, null);
     }
 
     @Override

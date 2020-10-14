@@ -1,19 +1,23 @@
 package lt.vilniustech.battlecity.graphics.game.obstacle;
 
-import lt.vilniustech.battlecity.graphics.game.GameGraphics;
-
+import javax.imageio.ImageIO;
 import java.awt.*;
-
+import java.io.File;
+import java.io.IOException;
 
 public class MetalWall extends Obstacle {
-    public static final int WIDTH = 36;
-    public static final int LENGTH = 37;
+    public static final int WIDTH = 20;
+    public static final int LENGTH = 20;
 
+    private static Image[] images = null;
     static {
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        images = new Image[]{
-                toolkit.getImage(CommonWall.class.getResource("sprites/metalWall.gif"))
-        };
+        try {
+            images = new Image[]{
+                    ImageIO.read(new File("sprites/metalWall.gif"))
+            };
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     public MetalWall(int x, int y) {
@@ -24,7 +28,7 @@ public class MetalWall extends Obstacle {
 
     @Override
     public void draw(Graphics graphics) {
-        graphics.drawImage(images[0], x, y, null);
+        graphics.drawImage(images[0], x, y, WIDTH, LENGTH, null);
     }
 
     @Override

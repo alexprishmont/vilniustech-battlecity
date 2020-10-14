@@ -8,20 +8,20 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="974a9" class="javax.swing.JButton" binding="resumeGame">
+      <component id="7bcf9" class="javax.swing.JButton" binding="mainMenu">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Resume game"/>
+          <text value="Main menu"/>
         </properties>
       </component>
-      <component id="7bcf9" class="javax.swing.JButton" binding="mainMenu">
+      <component id="974a9" class="javax.swing.JButton" binding="resumeGame">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Main menu"/>
+          <text value="Resume game"/>
         </properties>
       </component>
     </children>

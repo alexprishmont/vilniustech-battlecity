@@ -7,11 +7,10 @@ import lt.vilniustech.battlecity.graphics.gui.menu.MenuForm;
 import javax.swing.*;
 
 public class PauseForm implements FormProvider {
+    private final FormProvider previousForm;
     private JButton resumeGame;
     private JButton mainMenu;
     private JPanel pausePanel;
-
-    private final FormProvider previousForm;
 
     public PauseForm(FormProvider formProvider) {
         this.previousForm = formProvider;
