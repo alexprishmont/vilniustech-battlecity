@@ -1,8 +1,5 @@
 package lt.vilniustech.battlecity.graphics.gui.menu;
 
-import lt.vilniustech.battlecity.eventmanager.EventManager;
-import lt.vilniustech.battlecity.eventmanager.events.ExitButtonPressed;
-import lt.vilniustech.battlecity.eventmanager.events.PlayGameButtonPressed;
 import lt.vilniustech.battlecity.graphics.gui.FormProvider;
 import lt.vilniustech.battlecity.graphics.gui.GUI;
 import lt.vilniustech.battlecity.graphics.gui.game.GameForm;
@@ -10,7 +7,6 @@ import lt.vilniustech.battlecity.graphics.gui.game.GameForm;
 import javax.swing.*;
 
 public class MenuForm implements FormProvider {
-    private static final EventManager eventManager = new EventManager(PlayGameButtonPressed.class, ExitButtonPressed.class);
     private static MenuForm form;
     private JPanel menuPanel;
     private JButton playGameBtn;
@@ -25,10 +21,6 @@ public class MenuForm implements FormProvider {
 
     public static MenuForm getForm() {
         return form;
-    }
-
-    public static EventManager getEventManager() {
-        return eventManager;
     }
 
     @Override

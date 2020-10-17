@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Home implements GameGraphics {
+public class Home extends GameGraphics {
     public static final int WIDTH = 20;
     public static final int LENGTH = 20;
 

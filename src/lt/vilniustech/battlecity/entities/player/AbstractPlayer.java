@@ -1,51 +1,80 @@
 package lt.vilniustech.battlecity.entities.player;
 
+import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.entities.BulletEntity;
+import lt.vilniustech.battlecity.entities.Destroyable;
+import lt.vilniustech.battlecity.entities.Entity;
+import lt.vilniustech.battlecity.entities.Healable;
+import lt.vilniustech.battlecity.graphics.game.bullet.Bullet;
 import lt.vilniustech.battlecity.graphics.game.player.Tank;
+import lt.vilniustech.battlecity.utils.Collision;
+import lt.vilniustech.battlecity.utils.Direction;
 
-public abstract class AbstractPlayer {
+
+public abstract class AbstractPlayer extends Entity implements Destroyable, Healable {
     protected float posX;
     protected float posY;
-    protected Tank tankSprite;
+    protected float timeBetweenShots = 2f;
+    protected float currentTime = 0f;
+    protected float health = 100f;
+    protected Collision collision;
 
     public static final float PLAYER_SPEED = 8.5f;
-    private static final float BULLET_SPEED = 15f;
-    private static final int BULLET_RANGE = 25;
 
-    public AbstractPlayer(Tank tankSprite) {
-        this.tankSprite = tankSprite;
-        posX = this.tankSprite.getX();
-        posY = this.tankSprite.getY();
+    public AbstractPlayer(Game game, Tank tankSprite) {
+        super(game, tankSprite);
+        posX = this.sprite.getX();
+        posY = this.sprite.getY();
+        collision = new Collision(game);
+    }
+
+    @Override
+    public void start() {
+        currentTime = timeBetweenShots;
+    }
+
+    @Override
+    public void update(float deltaTime) {
+        currentTime += deltaTime;
     }
 
     public void move(float x, float y) {
         posX += x;
         posY += y;
 
-        tankSprite.setX(Math.round(posX));
-        tankSprite.setY(Math.round(posY));
+        sprite.setX(Math.round(posX));
+        sprite.setY(Math.round(posY));
 
-        changeDirection(x, y);
+        if (collision.collides(this)) {
+            posX -= x;
+            posY -= y;
+
+            sprite.setX(Math.round(posX));
+            sprite.setY(Math.round(posY));
+        }
     }
 
     public void shoot() {
+        if (currentTime < timeBetweenShots) {
+            return;
+        }
 
+        Bullet bullet = new Bullet(new Direction(), Math.round(posX), Math.round(posY));
+        bullet.setDirection(getTankSprite().getCurrentDirection());
+        new BulletEntity(game, bullet);
+
+        currentTime = 0;
     }
 
     public Tank getTankSprite() {
-        return tankSprite;
+        return (Tank) sprite;
     }
 
-    private void changeDirection(float x, float y) {
-        if (y < 0) {
-            tankSprite.setCurrentDirection(Tank.DIRECTION_UP);
-        } else if (y > 0) {
-            tankSprite.setCurrentDirection(Tank.DIRECTION_DOWN);
-        }
+    public float getHealth() {
+        return health;
+    }
 
-        if (x < 0) {
-            tankSprite.setCurrentDirection(Tank.DIRECTION_LEFT);
-        } else if (x > 0) {
-            tankSprite.setCurrentDirection(Tank.DIRECTION_RIGHT);
-        }
+    public void setHealth(float health) {
+        this.health = health;
     }
 }

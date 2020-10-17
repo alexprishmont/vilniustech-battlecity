@@ -1,68 +1,48 @@
 package lt.vilniustech.battlecity.graphics.game.player;
 
 import lt.vilniustech.battlecity.graphics.game.GameGraphics;
+import lt.vilniustech.battlecity.utils.Direction;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Tank implements GameGraphics {
+public abstract class Tank extends GameGraphics {
     public static final int WIDTH = 20;
     public static final int LENGTH = 20;
 
     protected static Image[] images = null;
 
-    protected Map<String, Image> tankDirections = new HashMap<>();
-    protected String currentDirection = DIRECTION_UP;
-    protected int x;
-    protected int y;
-
-    public static final String DIRECTION_UP = "U";
-    public static final String DIRECTION_DOWN = "D";
-    public static final String DIRECTION_LEFT = "L";
-    public static final String DIRECTION_RIGHT = "R";
+    protected Map<Character, Image> tankDirections = new HashMap<>();
+    protected Direction direction;
 
     public Tank(int x, int y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
+        direction = new Direction();
+        direction.setCurrentDirection(Direction.UP);
 
-        this.tankDirections.put("D", images[0]);
-        this.tankDirections.put("U", images[1]);
-        this.tankDirections.put("L", images[2]);
-        this.tankDirections.put("R", images[3]);
+        this.tankDirections.put(Direction.DOWN, images[0]);
+        this.tankDirections.put(Direction.UP, images[1]);
+        this.tankDirections.put(Direction.LEFT, images[2]);
+        this.tankDirections.put(Direction.RIGHT, images[3]);
     }
 
     @Override
     public void draw(Graphics graphics) {
-        graphics.drawImage(tankDirections.get(currentDirection), x, y, WIDTH, LENGTH, null);
+        graphics.drawImage(tankDirections.get(direction.getCurrentDirection()), getX(), getY(), WIDTH, LENGTH, null);
     }
 
     @Override
     public Rectangle getRectangle() {
-        return new Rectangle(x, y, WIDTH, LENGTH);
+        return new Rectangle(getX(), getY(), WIDTH, LENGTH);
     }
 
-    public String getCurrentDirection() {
-        return currentDirection;
+    public char getCurrentDirection() {
+        return direction.getCurrentDirection();
     }
 
-    public void setCurrentDirection(String currentDirection) {
-        this.currentDirection = currentDirection;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setCurrentDirection(char currentDirection) {
+        this.direction.setCurrentDirection(currentDirection);
     }
 }

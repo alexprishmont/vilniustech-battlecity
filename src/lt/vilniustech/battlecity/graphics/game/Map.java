@@ -1,17 +1,23 @@
 package lt.vilniustech.battlecity.graphics.game;
 
+import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.entities.Entity;
+import lt.vilniustech.battlecity.entities.Healable;
+import lt.vilniustech.battlecity.entities.obstacle.CommonWallEntity;
+import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
+import lt.vilniustech.battlecity.entities.obstacle.MetalWallEntity;
+import lt.vilniustech.battlecity.entities.player.BotEntity;
+import lt.vilniustech.battlecity.entities.player.PlayerEntity;
 import lt.vilniustech.battlecity.graphics.game.obstacle.CommonWall;
 import lt.vilniustech.battlecity.graphics.game.obstacle.MetalWall;
-import lt.vilniustech.battlecity.graphics.game.obstacle.Obstacle;
 import lt.vilniustech.battlecity.graphics.game.player.NpcTank;
 import lt.vilniustech.battlecity.graphics.game.player.PlayerTank;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Map implements GameGraphics {
+public class Map implements Drawable {
     private static Map instance;
+    private Game game;
 
     private int model[][] = new int[][]{
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -26,7 +32,7 @@ public class Map implements GameGraphics {
             {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
             {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
             {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-            {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
+            {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
             {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
             {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
             {1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
@@ -45,11 +51,6 @@ public class Map implements GameGraphics {
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
-    private List<Obstacle> obstacles = new ArrayList<>();
-    private List<NpcTank> npcTanks = new ArrayList<>();
-    private PlayerTank playerTank;
-    private Home home;
-
     public static Map getInstance() {
         if (instance == null) {
             instance = new Map();
@@ -58,28 +59,28 @@ public class Map implements GameGraphics {
         return instance;
     }
 
-    public void init() {
+    public void setGame(Game game) {
+        this.game = game;
         for (int y = 0; y < width(); y++) {
             for (int x = 0; x < height(); x++) {
-
                 if (isMetalWall(x, y)) {
-                    obstacles.add(
-                            new MetalWall(x * MetalWall.LENGTH, y * MetalWall.WIDTH)
-                    );
+                    new MetalWallEntity(game, new MetalWall(x * MetalWall.LENGTH, y * MetalWall.WIDTH));
                 }
 
                 if (isCommonWall(x, y)) {
-                    obstacles.add(
-                            new CommonWall(x * CommonWall.LENGTH, y * CommonWall.WIDTH)
-                    );
+                    new CommonWallEntity(game, new CommonWall(x * CommonWall.LENGTH, y * CommonWall.WIDTH));
                 }
 
                 if (isHome(x, y)) {
-                    home = new Home(x * Home.LENGTH, y * Home.WIDTH);
+                    new HomeEntity(game, new Home(x * Home.LENGTH, y * Home.WIDTH));
                 }
 
                 if (isPlayer(x, y)) {
-                    playerTank = new PlayerTank(x * PlayerTank.LENGTH, y * PlayerTank.WIDTH);
+                    new PlayerEntity(game, new PlayerTank(x * PlayerTank.LENGTH, y * PlayerTank.WIDTH));
+                }
+
+                if (isNpc(x, y)) {
+                    new BotEntity(game, new NpcTank(x * NpcTank.LENGTH, y * NpcTank.WIDTH));
                 }
             }
         }
@@ -87,17 +88,13 @@ public class Map implements GameGraphics {
 
     @Override
     public void draw(Graphics graphics) {
-        for (Obstacle obstacle : obstacles) {
-            obstacle.draw(graphics);
+        if (game == null) {
+            return;
         }
 
-        home.draw(graphics);
-        playerTank.draw(graphics);
-    }
-
-    @Override
-    public Rectangle getRectangle() {
-        return null;
+        for (Entity entity : game.getEntities().values()) {
+            entity.draw(graphics);
+        }
     }
 
     public boolean isMetalWall(int x, int y) {
@@ -136,19 +133,5 @@ public class Map implements GameGraphics {
         return model[0].length;
     }
 
-    public List<Obstacle> getObstacles() {
-        return obstacles;
-    }
 
-    public List<NpcTank> getNpcTanks() {
-        return npcTanks;
-    }
-
-    public PlayerTank getPlayerTank() {
-        return playerTank;
-    }
-
-    public Home getHome() {
-        return home;
-    }
 }

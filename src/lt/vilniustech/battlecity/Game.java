@@ -1,36 +1,29 @@
 package lt.vilniustech.battlecity;
 
-import lt.vilniustech.battlecity.State.KeyState;
-import lt.vilniustech.battlecity.State.State;
-import lt.vilniustech.battlecity.entities.player.AbstractPlayer;
-import lt.vilniustech.battlecity.entities.player.Player;
-import lt.vilniustech.battlecity.graphics.game.player.Tank;
+import lt.vilniustech.battlecity.entities.Entity;
+
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Game {
-    private Player player;
-    private KeyState keyState;
+    private final Map<Entity, Entity> entities = new ConcurrentHashMap<>();
 
     public Game() {
-        player = new Player();
-        keyState = KeyState.getInstance();
     }
 
     public void start() {
-        System.out.println("Started");
+        for (Entity entity : entities.values()) {
+            entity.start();
+        }
     }
 
     public void update(float deltaTime) {
-        if (keyState.getState('W') == State.DOWN) {
-            player.move(0, -AbstractPlayer.PLAYER_SPEED * deltaTime);
+        for (Entity entity : entities.values()) {
+            entity.update(deltaTime);
         }
-        else if (keyState.getState('S') == State.DOWN) {
-            player.move(0, AbstractPlayer.PLAYER_SPEED * deltaTime);
-        }
-        else if (keyState.getState('A') == State.DOWN) {
-            player.move(-AbstractPlayer.PLAYER_SPEED * deltaTime, 0);
-        }
-        else if (keyState.getState('D') == State.DOWN) {
-            player.move(AbstractPlayer.PLAYER_SPEED * deltaTime, 0);
-        }
+    }
+
+    public Map<Entity, Entity> getEntities() {
+        return entities;
     }
 }

@@ -1,5 +1,6 @@
 package lt.vilniustech.battlecity;
 
+import lt.vilniustech.battlecity.graphics.game.Map;
 import lt.vilniustech.battlecity.graphics.gui.GUI;
 
 import javax.swing.*;
@@ -8,16 +9,17 @@ import java.time.temporal.ChronoUnit;
 
 public class GameThread {
     private volatile boolean started = false;
-    private volatile  boolean paused = false;
+    private volatile boolean paused = false;
 
     private final Game game;
-    private Thread thread;
+    private final Thread thread;
 
     private Instant previousTime;
     private Instant currentTime;
 
     public GameThread() {
         game = new Game();
+        Map.getInstance().setGame(game);
         thread = new Thread(getRunnable());
     }
 

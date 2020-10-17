@@ -21,17 +21,17 @@ public class CommonWall extends Obstacle {
     }
 
     public CommonWall(int x, int y) {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
     }
 
     @Override
     public void draw(Graphics graphics) {
-        graphics.drawImage(images[0], x, y, WIDTH, LENGTH, null);
+        graphics.drawImage(images[0], getX(), getY(), WIDTH, LENGTH, null);
     }
 
     @Override
     public Rectangle getRectangle() {
-        return new Rectangle(x, y, WIDTH, LENGTH);
+        return new Rectangle(getX(), getY(), WIDTH, LENGTH);
     }
 }
