@@ -9,7 +9,7 @@ public class ScoreEntity extends Entity implements NonCollideable {
 
     public ScoreEntity(Game game, Score sprite) {
         super(game, sprite);
-        BulletEntity.getEventManager().subscribe(TankKilled.class, event -> {
+        Game.getEventManager().subscribe(TankKilled.class, event -> {
             score ++;
             sprite.setScore(score);
         });

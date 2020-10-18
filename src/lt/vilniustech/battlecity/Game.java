@@ -2,15 +2,28 @@ package lt.vilniustech.battlecity;
 
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.NonCollideable;
+import lt.vilniustech.battlecity.entities.ScoreEntity;
+import lt.vilniustech.battlecity.entities.player.BotEntity;
+import lt.vilniustech.battlecity.eventmanager.EventManager;
+import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
+import lt.vilniustech.battlecity.eventmanager.events.NoTanksLeft;
+import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
 import lt.vilniustech.battlecity.utils.EntityType;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class Game {
+    private final static EventManager eventManager =
+            new EventManager(TankKilled.class, HomeDestroy.class, NoTanksLeft.class);
     private final Map<Entity, Entity> entities = new ConcurrentHashMap<>();
 
     public Game() {
+    }
+
+    public static EventManager getEventManager() {
+        return eventManager;
     }
 
     public void start() {
@@ -25,6 +38,7 @@ public class Game {
         }
 
         collide();
+        checkIfPlayerWon();
     }
 
     public void collide() {
@@ -45,6 +59,18 @@ public class Game {
                 rightEntity.collides(leftEntity);
                 break;
             }
+        }
+    }
+
+    private void checkIfPlayerWon() {
+        List<Entity> entityList = new ArrayList<>(entities.values());
+        entityList.stream()
+                .filter(BotEntity.class::isInstance)
+                .map(BotEntity.class::cast)
+                .collect(Collectors.toList());
+
+        if (entityList.size() <= 0) {
+            eventManager.notify(new NoTanksLeft(ScoreEntity.getScore()));
         }
     }
 

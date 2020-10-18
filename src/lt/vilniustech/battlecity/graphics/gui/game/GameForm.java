@@ -1,7 +1,9 @@
 package lt.vilniustech.battlecity.graphics.gui.game;
 
+import lt.vilniustech.battlecity.Game;
 import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
 import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
+import lt.vilniustech.battlecity.eventmanager.events.NoTanksLeft;
 import lt.vilniustech.battlecity.graphics.gui.finished.FinishedForm;
 import lt.vilniustech.battlecity.state.KeyState;
 import lt.vilniustech.battlecity.eventmanager.EventListener;
@@ -23,9 +25,12 @@ public class GameForm implements FormProvider {
             }
         });
 
-        HomeEntity.getEventManager().subscribe(HomeDestroy.class, (EventListener<HomeDestroy>) event -> {
-            GUI.getInstance().switchContentPane(new FinishedForm(event.getScore()));
-        });
+        Game.getEventManager().subscribe(HomeDestroy.class,
+                (EventListener<HomeDestroy>) event ->
+                        GUI.getInstance().switchContentPane(new FinishedForm(event.getScore())));
+        Game.getEventManager().subscribe(NoTanksLeft.class,
+                (EventListener<NoTanksLeft>) event ->
+                        GUI.getInstance().switchContentPane(new FinishedForm(event.getScore())));
     }
 
     private void createUIComponents() {

@@ -3,7 +3,6 @@ package lt.vilniustech.battlecity.entities;
 import lt.vilniustech.battlecity.Game;
 import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
 import lt.vilniustech.battlecity.entities.player.AbstractPlayerEntity;
-import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
 import lt.vilniustech.battlecity.graphics.game.bullet.Bullet;
 import lt.vilniustech.battlecity.utils.Direction;
@@ -16,8 +15,6 @@ public class BulletEntity extends Entity {
     private final AbstractPlayerEntity shotOwner;
     private float posX;
     private float posY;
-    private static final EventManager eventManager = new EventManager(TankKilled.class);
-
 
     public BulletEntity(AbstractPlayerEntity shotOwner, Game game, Bullet bulletSprite) {
         super(game, bulletSprite);
@@ -74,10 +71,6 @@ public class BulletEntity extends Entity {
         destroy();
     }
 
-    public static EventManager getEventManager() {
-        return eventManager;
-    }
-
     private void move(float x, float y) {
         posX += x;
         posY += y;
@@ -91,6 +84,6 @@ public class BulletEntity extends Entity {
             return;
         }
 
-        eventManager.notify(new TankKilled());
+        Game.getEventManager().notify(new TankKilled());
     }
 }
