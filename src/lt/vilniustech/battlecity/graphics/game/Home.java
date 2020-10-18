@@ -9,9 +9,6 @@ public class Home extends GameGraphics {
     public static final int WIDTH = 20;
     public static final int LENGTH = 20;
 
-    private int x;
-    private int y;
-
     private static Image[] images = null;
 
     static {
@@ -25,33 +22,17 @@ public class Home extends GameGraphics {
     }
 
     public Home(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+        setX(x);
+        setY(y);
     }
 
     @Override
     public void draw(Graphics graphics) {
-        graphics.drawImage(images[0], x, y, WIDTH, LENGTH, null);
+        graphics.drawImage(images[0], getX(), getY(), WIDTH, LENGTH, null);
     }
 
     @Override
     public Rectangle getRectangle() {
-        return new Rectangle(x, y, WIDTH, LENGTH);
+        return new Rectangle(getX(), getY(), WIDTH, LENGTH);
     }
 }

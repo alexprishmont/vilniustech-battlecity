@@ -1,7 +1,7 @@
 package lt.vilniustech.battlecity.entities.player;
 
 import lt.vilniustech.battlecity.Game;
-import lt.vilniustech.battlecity.entities.ScoreEntity;
+import lt.vilniustech.battlecity.graphics.game.Health;
 import lt.vilniustech.battlecity.graphics.game.Score;
 import lt.vilniustech.battlecity.state.KeyState;
 import lt.vilniustech.battlecity.state.State;
@@ -10,9 +10,12 @@ import lt.vilniustech.battlecity.utils.Direction;
 import lt.vilniustech.battlecity.utils.Key;
 
 public class PlayerEntity extends AbstractPlayerEntity {
+    private final HealthEntity healthEntity;
+
     public PlayerEntity(Game game, Tank tankSprite) {
         super(game, tankSprite);
         new ScoreEntity(game, new Score(200, 70));
+        healthEntity = new HealthEntity(game, new Health(350, 70));
     }
 
     @Override
@@ -36,6 +39,8 @@ public class PlayerEntity extends AbstractPlayerEntity {
         if (isKeyDown(Key.KEY_SHOOT)) {
             shoot();
         }
+
+        healthEntity.changeHealthOnUI(health);
     }
 
     private boolean isKeyDown(char key) {

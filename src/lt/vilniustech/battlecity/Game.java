@@ -2,7 +2,7 @@ package lt.vilniustech.battlecity;
 
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.NonCollideable;
-import lt.vilniustech.battlecity.entities.ScoreEntity;
+import lt.vilniustech.battlecity.entities.player.ScoreEntity;
 import lt.vilniustech.battlecity.entities.player.BotEntity;
 import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;

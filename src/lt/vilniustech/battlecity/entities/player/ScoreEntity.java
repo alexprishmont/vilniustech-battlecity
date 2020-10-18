@@ -1,6 +1,8 @@
-package lt.vilniustech.battlecity.entities;
+package lt.vilniustech.battlecity.entities.player;
 
 import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.entities.Entity;
+import lt.vilniustech.battlecity.entities.NonCollideable;
 import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
 import lt.vilniustech.battlecity.graphics.game.Score;
 

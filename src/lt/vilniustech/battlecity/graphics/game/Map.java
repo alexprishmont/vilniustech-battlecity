@@ -2,8 +2,6 @@ package lt.vilniustech.battlecity.graphics.game;
 
 import lt.vilniustech.battlecity.Game;
 import lt.vilniustech.battlecity.entities.Entity;
-import lt.vilniustech.battlecity.entities.Healable;
-import lt.vilniustech.battlecity.entities.ScoreEntity;
 import lt.vilniustech.battlecity.entities.obstacle.*;
 import lt.vilniustech.battlecity.entities.player.BotEntity;
 import lt.vilniustech.battlecity.entities.player.PlayerEntity;
