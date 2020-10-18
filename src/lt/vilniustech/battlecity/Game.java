@@ -64,9 +64,9 @@ public class Game {
 
     private void checkIfPlayerWon() {
         List<Entity> entityList = new ArrayList<>(entities.values());
-        entityList.stream()
-                .filter(BotEntity.class::isInstance)
-                .map(BotEntity.class::cast)
+        entityList = entityList.stream()
+                .filter(entity -> entity instanceof BotEntity)
+                .map(entity -> (BotEntity) entity)
                 .collect(Collectors.toList());
 
         if (entityList.size() <= 0) {
