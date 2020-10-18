@@ -1,7 +1,7 @@
 package lt.vilniustech.battlecity.listeners;
 
-import lt.vilniustech.battlecity.State.KeyState;
-import lt.vilniustech.battlecity.State.State;
+import lt.vilniustech.battlecity.state.KeyState;
+import lt.vilniustech.battlecity.state.State;
 
 import java.awt.event.KeyEvent;
 

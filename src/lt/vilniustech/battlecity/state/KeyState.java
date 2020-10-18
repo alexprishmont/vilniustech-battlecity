@@ -1,4 +1,4 @@
-package lt.vilniustech.battlecity.State;
+package lt.vilniustech.battlecity.state;
 
 import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.KeyPressed;

@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.graphics.gui.game;
 
-import lt.vilniustech.battlecity.State.KeyState;
+import lt.vilniustech.battlecity.state.KeyState;
 import lt.vilniustech.battlecity.eventmanager.EventListener;
 import lt.vilniustech.battlecity.eventmanager.events.KeyPressed;
 import lt.vilniustech.battlecity.graphics.gui.FormProvider;
