@@ -6,7 +6,7 @@ import lt.vilniustech.battlecity.graphics.game.GameGraphics;
 
 import java.awt.*;
 
-public abstract class Entity implements Drawable {
+public abstract class Entity implements Drawable, Collideable {
     protected final Game game;
     protected final GameGraphics sprite;
 
@@ -25,10 +25,19 @@ public abstract class Entity implements Drawable {
         this.sprite.draw(graphics);
     }
 
+    public boolean intersects(Entity entity) {
+        return sprite.getRectangle().intersects(entity.getSprite().getRectangle());
+    }
+
     public GameGraphics getSprite() {
         return sprite;
     }
 
+    @Override
+    public void collides(Entity withEntity) {
+    }
+    
     public abstract void update(float deltaTime);
+
     public abstract void start();
 }

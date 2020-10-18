@@ -1,19 +1,24 @@
 package lt.vilniustech.battlecity.entities;
 
 import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.entities.player.AbstractPlayer;
 import lt.vilniustech.battlecity.entities.player.PlayerEntity;
 import lt.vilniustech.battlecity.graphics.game.bullet.Bullet;
 import lt.vilniustech.battlecity.utils.Direction;
+import lt.vilniustech.battlecity.utils.EntityType;
 
 public class BulletEntity extends Entity {
     public static final float BULLET_SPEED = 12f;
+    public static final float BULLET_DAMAGE = 25f;
     private final Bullet bulletSprite;
+    private final AbstractPlayer shotOwner;
     private float posX;
     private float posY;
 
-    public BulletEntity(Game game, Bullet bulletSprite) {
+    public BulletEntity(AbstractPlayer shotOwner, Game game, Bullet bulletSprite) {
         super(game, bulletSprite);
         this.bulletSprite = bulletSprite;
+        this.shotOwner = shotOwner;
         posX = this.bulletSprite.getX();
         posY = this.bulletSprite.getY();
     }
@@ -32,7 +37,33 @@ public class BulletEntity extends Entity {
 
     @Override
     public void start() {
+    }
 
+    @Override
+    public void collides(Entity withEntity) {
+        Destroyable destroyable = EntityType.isEntity(withEntity, Destroyable.class);
+        Healable healable = EntityType.isEntity(withEntity, Healable.class);
+        AbstractPlayer playerEntity = EntityType.isEntity(withEntity, AbstractPlayer.class);
+
+        if (playerEntity == shotOwner) {
+            return;
+        }
+
+        if (healable != null) {
+            healable.setHealth(healable.getHealth() - BULLET_DAMAGE);
+        }
+
+        if (destroyable != null) {
+            if (healable != null) {
+                if (healable.getHealth() <= 0) {
+                    destroyable.destroy();
+                }
+            } else {
+                destroyable.destroy();
+            }
+        }
+
+        destroy();
     }
 
     private void move(float x, float y) {
@@ -44,34 +75,6 @@ public class BulletEntity extends Entity {
     }
 
     private void hit() {
-        for (Entity entity : game.getEntities().values()) {
-            if (entity == this) {
-                break;
-            }
 
-            if (sprite.getRectangle().intersects(entity.getSprite().getRectangle())) {
-                if (entity instanceof Destroyable) {
-
-                    if (entity instanceof Healable) {
-                        if (entity instanceof PlayerEntity) {
-                            break;
-                        }
-
-                        if (((Healable) entity).getHealth() <= 0) {
-                            entity.destroy();
-                            destroy();
-                            break;
-                        }
-
-                        ((Healable) entity).setHealth(((Healable) entity).getHealth() - 25f);
-                    }
-
-                    entity.destroy();
-                }
-
-                destroy();
-                break;
-            }
-        }
     }
 }

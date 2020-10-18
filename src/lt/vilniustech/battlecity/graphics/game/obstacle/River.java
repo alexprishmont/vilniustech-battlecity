@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class River extends Obstacle {
     public static final int WIDTH = 20;
-    private static final int LENGTH = 20;
+    public static final int LENGTH = 20;
 
     private static Image[] images = null;
     static {
