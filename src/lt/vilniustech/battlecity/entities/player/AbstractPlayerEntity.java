@@ -8,7 +8,7 @@ import lt.vilniustech.battlecity.utils.Direction;
 import lt.vilniustech.battlecity.utils.EntityType;
 
 
-public abstract class AbstractPlayer extends Entity implements Destroyable, Healable {
+public abstract class AbstractPlayerEntity extends Entity implements Destroyable, Healable {
     protected float posX;
     protected float posY;
     protected float deltaX;
@@ -16,10 +16,9 @@ public abstract class AbstractPlayer extends Entity implements Destroyable, Heal
     protected float timeBetweenShots = 2f;
     protected float currentTime = 0f;
     protected float health = 100f;
-
     protected static final float PLAYER_SPEED = 8.5f;
 
-    public AbstractPlayer(Game game, Tank tankSprite) {
+    public AbstractPlayerEntity(Game game, Tank tankSprite) {
         super(game, tankSprite);
         posX = this.sprite.getX();
         posY = this.sprite.getY();

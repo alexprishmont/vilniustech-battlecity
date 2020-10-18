@@ -1,8 +1,10 @@
 package lt.vilniustech.battlecity.entities;
 
 import lt.vilniustech.battlecity.Game;
-import lt.vilniustech.battlecity.entities.player.AbstractPlayer;
-import lt.vilniustech.battlecity.entities.player.PlayerEntity;
+import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
+import lt.vilniustech.battlecity.entities.player.AbstractPlayerEntity;
+import lt.vilniustech.battlecity.eventmanager.EventManager;
+import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
 import lt.vilniustech.battlecity.graphics.game.bullet.Bullet;
 import lt.vilniustech.battlecity.utils.Direction;
 import lt.vilniustech.battlecity.utils.EntityType;
@@ -11,11 +13,13 @@ public class BulletEntity extends Entity {
     public static final float BULLET_SPEED = 12f;
     public static final float BULLET_DAMAGE = 25f;
     private final Bullet bulletSprite;
-    private final AbstractPlayer shotOwner;
+    private final AbstractPlayerEntity shotOwner;
     private float posX;
     private float posY;
+    private static final EventManager eventManager = new EventManager(TankKilled.class);
 
-    public BulletEntity(AbstractPlayer shotOwner, Game game, Bullet bulletSprite) {
+
+    public BulletEntity(AbstractPlayerEntity shotOwner, Game game, Bullet bulletSprite) {
         super(game, bulletSprite);
         this.bulletSprite = bulletSprite;
         this.shotOwner = shotOwner;
@@ -26,13 +30,11 @@ public class BulletEntity extends Entity {
     @Override
     public void update(float deltaTime) {
         switch (bulletSprite.getDirection()) {
-            case Direction.UP -> move (0, -BULLET_SPEED * deltaTime);
-            case Direction.DOWN -> move (0, BULLET_SPEED * deltaTime);
-            case Direction.LEFT -> move (-BULLET_SPEED * deltaTime, 0);
-            case Direction.RIGHT -> move (BULLET_SPEED * deltaTime, 0);
+            case Direction.UP -> move(0, -BULLET_SPEED * deltaTime);
+            case Direction.DOWN -> move(0, BULLET_SPEED * deltaTime);
+            case Direction.LEFT -> move(-BULLET_SPEED * deltaTime, 0);
+            case Direction.RIGHT -> move(BULLET_SPEED * deltaTime, 0);
         }
-
-        hit();
     }
 
     @Override
@@ -43,10 +45,15 @@ public class BulletEntity extends Entity {
     public void collides(Entity withEntity) {
         Destroyable destroyable = EntityType.isEntity(withEntity, Destroyable.class);
         Healable healable = EntityType.isEntity(withEntity, Healable.class);
-        AbstractPlayer playerEntity = EntityType.isEntity(withEntity, AbstractPlayer.class);
+        AbstractPlayerEntity playerEntity = EntityType.isEntity(withEntity, AbstractPlayerEntity.class);
+        HomeEntity homeEntity = EntityType.isEntity(withEntity, HomeEntity.class);
 
         if (playerEntity == shotOwner) {
             return;
+        }
+
+        if (homeEntity != null) {
+            homeEntity.destroy();
         }
 
         if (healable != null) {
@@ -57,6 +64,7 @@ public class BulletEntity extends Entity {
             if (healable != null) {
                 if (healable.getHealth() <= 0) {
                     destroyable.destroy();
+                    notifyIfTankDestroyed(withEntity);
                 }
             } else {
                 destroyable.destroy();
@@ -64,6 +72,10 @@ public class BulletEntity extends Entity {
         }
 
         destroy();
+    }
+
+    public static EventManager getEventManager() {
+        return eventManager;
     }
 
     private void move(float x, float y) {
@@ -74,7 +86,11 @@ public class BulletEntity extends Entity {
         bulletSprite.setY(Math.round(posY));
     }
 
-    private void hit() {
+    private void notifyIfTankDestroyed(Entity entity) {
+        if (EntityType.isEntity(entity, AbstractPlayerEntity.class) == null) {
+            return;
+        }
 
+        eventManager.notify(new TankKilled());
     }
 }

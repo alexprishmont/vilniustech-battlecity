@@ -4,7 +4,7 @@ import lt.vilniustech.battlecity.Game;
 import lt.vilniustech.battlecity.entities.Healable;
 import lt.vilniustech.battlecity.graphics.game.player.Tank;
 
-public class BotEntity extends AbstractPlayer implements Healable {
+public class BotEntity extends AbstractPlayerEntity implements Healable {
     public BotEntity(Game game, Tank tankSprite) {
         super(game, tankSprite);
     }
@@ -12,5 +12,7 @@ public class BotEntity extends AbstractPlayer implements Healable {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+
+
     }
 }

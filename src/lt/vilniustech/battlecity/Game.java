@@ -1,6 +1,8 @@
 package lt.vilniustech.battlecity;
 
 import lt.vilniustech.battlecity.entities.Entity;
+import lt.vilniustech.battlecity.entities.NonCollideable;
+import lt.vilniustech.battlecity.utils.EntityType;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,6 +29,8 @@ public class Game {
 
     public void collide() {
         List<Entity> entityList = new ArrayList<>(entities.values());
+
+        entityList.removeIf(entity -> EntityType.isEntity(entity, NonCollideable.class) != null);
 
         for (int i = 0; i < entityList.size(); i++) {
             for (int j = i + 1; j < entityList.size(); j++) {

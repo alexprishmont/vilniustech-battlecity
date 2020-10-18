@@ -1,5 +1,8 @@
 package lt.vilniustech.battlecity.graphics.gui.game;
 
+import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
+import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
+import lt.vilniustech.battlecity.graphics.gui.finished.FinishedForm;
 import lt.vilniustech.battlecity.state.KeyState;
 import lt.vilniustech.battlecity.eventmanager.EventListener;
 import lt.vilniustech.battlecity.eventmanager.events.KeyPressed;
@@ -18,6 +21,10 @@ public class GameForm implements FormProvider {
             if (event.getPressedKey() == KeyEvent.VK_ESCAPE) {
                 GUI.getInstance().switchContentPane(new PauseForm(this));
             }
+        });
+
+        HomeEntity.getEventManager().subscribe(HomeDestroy.class, (EventListener<HomeDestroy>) event -> {
+            GUI.getInstance().switchContentPane(new FinishedForm(event.getScore()));
         });
     }
 
