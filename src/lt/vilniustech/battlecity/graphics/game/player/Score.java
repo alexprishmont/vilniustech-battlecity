@@ -1,4 +1,6 @@
-package lt.vilniustech.battlecity.graphics.game;
+package lt.vilniustech.battlecity.graphics.game.player;
+
+import lt.vilniustech.battlecity.graphics.game.GameGraphics;
 
 import java.awt.*;
 

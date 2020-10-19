@@ -1,6 +1,5 @@
 package lt.vilniustech.battlecity;
 
-import lt.vilniustech.battlecity.graphics.game.Map;
 import lt.vilniustech.battlecity.graphics.gui.GUI;
 
 import javax.swing.*;
@@ -19,7 +18,6 @@ public class GameThread {
 
     public GameThread() {
         game = new Game();
-        Map.getInstance().setGame(game);
         thread = new Thread(getRunnable());
     }
 

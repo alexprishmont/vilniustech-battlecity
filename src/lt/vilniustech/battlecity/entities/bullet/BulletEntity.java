@@ -1,16 +1,21 @@
-package lt.vilniustech.battlecity.entities;
+package lt.vilniustech.battlecity.entities.bullet;
 
 import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.entities.Destroyable;
+import lt.vilniustech.battlecity.entities.Driveable;
+import lt.vilniustech.battlecity.entities.Entity;
+import lt.vilniustech.battlecity.entities.Healable;
 import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
 import lt.vilniustech.battlecity.entities.player.AbstractPlayerEntity;
+import lt.vilniustech.battlecity.entities.player.PlayerEntity;
 import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
 import lt.vilniustech.battlecity.graphics.game.bullet.Bullet;
 import lt.vilniustech.battlecity.utils.Direction;
 import lt.vilniustech.battlecity.utils.EntityType;
 
 public class BulletEntity extends Entity {
-    public static final float BULLET_SPEED = 12f;
-    public static final float BULLET_DAMAGE = 25f;
+    public static final float BULLET_SPEED = 30f;
+    public static final float BULLET_DAMAGE = 30f;
     private final Bullet bulletSprite;
     private final AbstractPlayerEntity shotOwner;
     private float posX;
@@ -44,8 +49,13 @@ public class BulletEntity extends Entity {
         Healable healable = EntityType.isEntity(withEntity, Healable.class);
         AbstractPlayerEntity playerEntity = EntityType.isEntity(withEntity, AbstractPlayerEntity.class);
         HomeEntity homeEntity = EntityType.isEntity(withEntity, HomeEntity.class);
+        Driveable driveable = EntityType.isEntity(withEntity, Driveable.class);
 
         if (playerEntity == shotOwner) {
+            return;
+        }
+
+        if (driveable != null) {
             return;
         }
 
@@ -80,6 +90,10 @@ public class BulletEntity extends Entity {
     }
 
     private void notifyIfTankDestroyed(Entity entity) {
+        if (EntityType.isEntity(shotOwner, PlayerEntity.class) == null) {
+            return;
+        }
+        
         if (EntityType.isEntity(entity, AbstractPlayerEntity.class) == null) {
             return;
         }

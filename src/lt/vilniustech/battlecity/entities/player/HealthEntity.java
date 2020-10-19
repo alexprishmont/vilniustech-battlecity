@@ -3,7 +3,7 @@ package lt.vilniustech.battlecity.entities.player;
 import lt.vilniustech.battlecity.Game;
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.NonCollideable;
-import lt.vilniustech.battlecity.graphics.game.Health;
+import lt.vilniustech.battlecity.graphics.game.player.Health;
 
 public class HealthEntity extends Entity implements NonCollideable {
     public HealthEntity(Game game, Health sprite) {

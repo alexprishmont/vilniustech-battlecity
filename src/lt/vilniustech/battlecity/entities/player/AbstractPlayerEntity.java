@@ -2,11 +2,11 @@ package lt.vilniustech.battlecity.entities.player;
 
 import lt.vilniustech.battlecity.Game;
 import lt.vilniustech.battlecity.entities.*;
+import lt.vilniustech.battlecity.entities.bullet.BulletEntity;
 import lt.vilniustech.battlecity.graphics.game.bullet.Bullet;
 import lt.vilniustech.battlecity.graphics.game.player.Tank;
 import lt.vilniustech.battlecity.utils.Direction;
 import lt.vilniustech.battlecity.utils.EntityType;
-
 
 public abstract class AbstractPlayerEntity extends Entity implements Destroyable, Healable {
     protected float posX;
@@ -16,7 +16,6 @@ public abstract class AbstractPlayerEntity extends Entity implements Destroyable
     protected float timeBetweenShots = 2f;
     protected float currentTime = 0f;
     protected float health = 100f;
-    protected static final float PLAYER_SPEED = 8.5f;
 
     public AbstractPlayerEntity(Game game, Tank tankSprite) {
         super(game, tankSprite);

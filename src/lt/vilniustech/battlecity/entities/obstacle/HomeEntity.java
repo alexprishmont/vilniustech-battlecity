@@ -26,4 +26,12 @@ public class HomeEntity extends Entity {
     public void start() {
 
     }
+
+    public int getX() {
+        return sprite.getX();
+    }
+
+    public int getY() {
+        return sprite.getY();
+    }
 }

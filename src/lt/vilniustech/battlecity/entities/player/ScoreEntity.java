@@ -4,7 +4,7 @@ import lt.vilniustech.battlecity.Game;
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.NonCollideable;
 import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
-import lt.vilniustech.battlecity.graphics.game.Score;
+import lt.vilniustech.battlecity.graphics.game.player.Score;
 
 public class ScoreEntity extends Entity implements NonCollideable {
     private static int score = 0;
