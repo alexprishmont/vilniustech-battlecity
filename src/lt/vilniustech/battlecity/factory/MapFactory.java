@@ -1,7 +1,7 @@
-package lt.vilniustech.battlecity.graphics.game.map;
+package lt.vilniustech.battlecity.factory;
 
 import lt.vilniustech.battlecity.Game;
-import lt.vilniustech.battlecity.factory.Factory;
+import lt.vilniustech.battlecity.graphics.game.map.Map;
 import lt.vilniustech.battlecity.graphics.game.map.level.Level;
 
 public class MapFactory implements Factory<Map> {

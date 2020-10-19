@@ -9,7 +9,7 @@ import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
 import lt.vilniustech.battlecity.eventmanager.events.NoTanksLeft;
 import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
-import lt.vilniustech.battlecity.graphics.game.map.MapFactory;
+import lt.vilniustech.battlecity.factory.MapFactory;
 import lt.vilniustech.battlecity.graphics.game.map.level.DefaultLevel;
 import lt.vilniustech.battlecity.utils.EntityType;
 
