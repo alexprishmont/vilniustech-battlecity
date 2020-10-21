@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.factory;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.graphics.game.map.Map;
 import lt.vilniustech.battlecity.graphics.game.map.level.Level;
 

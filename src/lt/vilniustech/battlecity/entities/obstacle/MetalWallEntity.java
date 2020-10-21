@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.entities.obstacle;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.graphics.game.GameGraphics;
 

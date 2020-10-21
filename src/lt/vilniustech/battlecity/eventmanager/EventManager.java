@@ -1,6 +1,5 @@
 package lt.vilniustech.battlecity.eventmanager;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.Map;
 public class EventManager {
     private final Map<Class<? extends Event>, List<EventListener<? extends Event>>> listeners = new HashMap<>();
 
+    @SafeVarargs
     public EventManager(Class<? extends Event>... eventTypes) {
         for (Class<? extends Event> eventType : eventTypes) {
             this.listeners.put(eventType, new ArrayList<>());

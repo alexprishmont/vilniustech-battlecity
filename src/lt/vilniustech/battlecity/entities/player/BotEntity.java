@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.entities.player;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.obstacle.CommonWallEntity;
 import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BotEntity extends AbstractPlayerEntity {
+    private static final float PLAYER_SPEED = 12f;
+    private static final float PLAYER_SHOOTING_DISTANCE = 8f;
+    private static final float HOME_SHOOTING_DISTANCE = 5f;
     private PlayerEntity playerEntity;
     private HomeEntity homeEntity;
-    private static final float PLAYER_SPEED = 12f;
 
     public BotEntity(Game game, Tank tankSprite) {
         super(game, tankSprite);
@@ -46,14 +48,14 @@ public class BotEntity extends AbstractPlayerEntity {
     public void update(float deltaTime) {
         super.update(deltaTime);
 
-        float playerDistance = Distance.getDistance(this, playerEntity);
-        float homeDistance = Distance.getDistance(this, homeEntity);
+        Entity nearest = Distance.getClosestBetweenThreeEntities(this, playerEntity, homeEntity);
 
-        if (playerDistance < homeDistance) {
-            shootOrDriveAt(playerEntity, Tank.WIDTH * 6f, deltaTime);
-        } else {
-            shootOrDriveAt(homeEntity, Home.WIDTH * 1.5f, deltaTime);
-        }
+        PlayerEntity playerEntity = EntityType.isEntity(nearest, PlayerEntity.class);
+        float shootingDistance = playerEntity != null
+                ? Tank.WIDTH * PLAYER_SHOOTING_DISTANCE : Home.WIDTH * HOME_SHOOTING_DISTANCE;
+
+        shootAt(nearest, shootingDistance);
+        driveAt(nearest, deltaTime);
     }
 
     @Override
@@ -70,13 +72,12 @@ public class BotEntity extends AbstractPlayerEntity {
         }
     }
 
-    private void shootOrDriveAt(Entity entity, float shootingDistance, float deltaTime) {
+    private boolean shootAt(Entity entity, float shootingDistance) {
         float distance = Distance.getDistance(this, entity);
+        return botShoot(distance, shootingDistance);
+    }
 
-        if (botShoot(distance, shootingDistance)) {
-            return;
-        }
-
+    private void driveAt(Entity entity, float deltaTime) {
         if (moveY(entity, deltaTime)) {
             return;
         }
@@ -96,9 +97,10 @@ public class BotEntity extends AbstractPlayerEntity {
 
         if (signum > 0) {
             getTankSprite().setCurrentDirection(Direction.RIGHT);
-        } else {
-            getTankSprite().setCurrentDirection(Direction.LEFT);
+            return true;
         }
+
+        getTankSprite().setCurrentDirection(Direction.LEFT);
 
         return true;
     }
@@ -115,9 +117,10 @@ public class BotEntity extends AbstractPlayerEntity {
 
         if (signum > 0) {
             getTankSprite().setCurrentDirection(Direction.DOWN);
-        } else {
-            getTankSprite().setCurrentDirection(Direction.UP);
+            return true;
         }
+
+        getTankSprite().setCurrentDirection(Direction.UP);
 
         return true;
     }

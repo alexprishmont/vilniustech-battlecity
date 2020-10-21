@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.entities.player;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.entities.*;
 import lt.vilniustech.battlecity.entities.bullet.BulletEntity;
 import lt.vilniustech.battlecity.graphics.game.bullet.Bullet;

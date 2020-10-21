@@ -1,33 +1,37 @@
-package lt.vilniustech.battlecity;
+package lt.vilniustech.battlecity.game;
 
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.NonCollideable;
-import lt.vilniustech.battlecity.entities.player.PlayerEntity;
 import lt.vilniustech.battlecity.entities.player.ScoreEntity;
-import lt.vilniustech.battlecity.entities.player.BotEntity;
 import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
 import lt.vilniustech.battlecity.eventmanager.events.NoTanksLeft;
 import lt.vilniustech.battlecity.eventmanager.events.TankKilled;
 import lt.vilniustech.battlecity.factory.MapFactory;
+import lt.vilniustech.battlecity.game.rules.Rule;
+import lt.vilniustech.battlecity.game.rules.RuleNoTanks;
+import lt.vilniustech.battlecity.game.rules.RulePlayerDied;
 import lt.vilniustech.battlecity.graphics.game.map.level.DefaultLevel;
 import lt.vilniustech.battlecity.utils.EntityType;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class Game {
     private final static EventManager eventManager =
             new EventManager(TankKilled.class, HomeDestroy.class, NoTanksLeft.class);
     private static lt.vilniustech.battlecity.graphics.game.map.Map map;
     private final Map<Entity, Entity> entities = new ConcurrentHashMap<>();
+    private final Map<Rule, Rule> rules = new ConcurrentHashMap<>();
 
     public Game() {
         Game.map = new MapFactory()
                 .setGame(this)
                 .setLevel(new DefaultLevel())
                 .create();
+
+        rules.put(new RuleNoTanks(), new RuleNoTanks());
+        rules.put(new RulePlayerDied(), new RulePlayerDied());
     }
 
     public static EventManager getEventManager() {
@@ -50,8 +54,15 @@ public class Game {
         }
 
         collide();
-        checkIfPlayerWon();
-        checkIfPlayerLost();
+
+        for (Rule rule : rules.values()) {
+            if (!rule.check(new ArrayList<>(entities.values()))) {
+                continue;
+            }
+
+            getEventManager().notify(new NoTanksLeft(ScoreEntity.getScore()));
+            break;
+        }
     }
 
     public void collide() {
@@ -72,30 +83,6 @@ public class Game {
                 rightEntity.collides(leftEntity);
                 break;
             }
-        }
-    }
-
-    private void checkIfPlayerLost() {
-        List<Entity> entityList = new ArrayList<>(entities.values());
-        entityList = entityList.stream()
-                .filter(entity -> entity instanceof PlayerEntity)
-                .map(entity -> (PlayerEntity) entity)
-                .collect(Collectors.toList());
-
-        if (entityList.size() <= 0) {
-            eventManager.notify(new NoTanksLeft(ScoreEntity.getScore()));
-        }
-    }
-
-    private void checkIfPlayerWon() {
-        List<Entity> entityList = new ArrayList<>(entities.values());
-        entityList = entityList.stream()
-                .filter(entity -> entity instanceof BotEntity)
-                .map(entity -> (BotEntity) entity)
-                .collect(Collectors.toList());
-
-        if (entityList.size() <= 0) {
-            eventManager.notify(new NoTanksLeft(ScoreEntity.getScore()));
         }
     }
 

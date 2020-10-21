@@ -1,6 +1,7 @@
 package lt.vilniustech.battlecity.graphics.gui;
 
-import lt.vilniustech.battlecity.GameThread;
+import lt.vilniustech.battlecity.game.Game;
+import lt.vilniustech.battlecity.game.GameThread;
 import lt.vilniustech.battlecity.eventmanager.EventListener;
 import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.PaneChanged;
@@ -56,7 +57,7 @@ public class GUI extends JFrame {
         eventManager.subscribe(PaneChanged.class, (EventListener<PaneChanged>) (event) -> {
             if (event.getForm() instanceof GameForm) {
                 if (gameThread == null) {
-                    gameThread = new GameThread();
+                    gameThread = new GameThread(new Game());
                     gameThread.start();
                     return;
                 }

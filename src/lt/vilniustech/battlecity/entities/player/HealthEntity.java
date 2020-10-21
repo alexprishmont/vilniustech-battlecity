@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.entities.player;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.NonCollideable;
 import lt.vilniustech.battlecity.graphics.game.player.Health;

@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.entities;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.graphics.game.Drawable;
 import lt.vilniustech.battlecity.graphics.game.GameGraphics;
 

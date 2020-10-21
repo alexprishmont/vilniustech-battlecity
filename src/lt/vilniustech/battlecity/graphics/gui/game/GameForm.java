@@ -1,7 +1,6 @@
 package lt.vilniustech.battlecity.graphics.gui.game;
 
-import lt.vilniustech.battlecity.Game;
-import lt.vilniustech.battlecity.entities.obstacle.HomeEntity;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
 import lt.vilniustech.battlecity.eventmanager.events.NoTanksLeft;
 import lt.vilniustech.battlecity.graphics.gui.finished.FinishedForm;

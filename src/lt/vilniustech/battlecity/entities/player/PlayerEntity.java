@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.entities.player;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.graphics.game.player.Health;
 import lt.vilniustech.battlecity.graphics.game.player.Score;
 import lt.vilniustech.battlecity.state.KeyState;

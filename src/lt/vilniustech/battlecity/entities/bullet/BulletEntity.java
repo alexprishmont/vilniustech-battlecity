@@ -1,6 +1,6 @@
 package lt.vilniustech.battlecity.entities.bullet;
 
-import lt.vilniustech.battlecity.Game;
+import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.entities.Destroyable;
 import lt.vilniustech.battlecity.entities.Driveable;
 import lt.vilniustech.battlecity.entities.Entity;
@@ -71,7 +71,7 @@ public class BulletEntity extends Entity {
             if (healable != null) {
                 if (healable.getHealth() <= 0) {
                     destroyable.destroy();
-                    notifyIfTankDestroyed(withEntity);
+                    notifyIfNpcTankDestroyed(withEntity);
                 }
             } else {
                 destroyable.destroy();
@@ -89,7 +89,7 @@ public class BulletEntity extends Entity {
         bulletSprite.setY(Math.round(posY));
     }
 
-    private void notifyIfTankDestroyed(Entity entity) {
+    private void notifyIfNpcTankDestroyed(Entity entity) {
         if (EntityType.isEntity(shotOwner, PlayerEntity.class) == null) {
             return;
         }

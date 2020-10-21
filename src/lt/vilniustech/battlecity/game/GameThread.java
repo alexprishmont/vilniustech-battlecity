@@ -1,4 +1,4 @@
-package lt.vilniustech.battlecity;
+package lt.vilniustech.battlecity.game;
 
 import lt.vilniustech.battlecity.graphics.gui.GUI;
 
@@ -7,18 +7,14 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 public class GameThread {
+    private final Game game;
     private volatile boolean started = false;
     private volatile boolean paused = false;
-
-    private final Game game;
-    private final Thread thread;
-
     private Instant previousTime;
     private Instant currentTime;
 
-    public GameThread() {
-        game = new Game();
-        thread = new Thread(getRunnable());
+    public GameThread(Game game) {
+        this.game = game;
     }
 
     public Runnable getRunnable() {
@@ -57,7 +53,7 @@ public class GameThread {
     public void start() {
         if (!started) {
             started = true;
-            thread.start();
+            new Thread(getRunnable()).start();
         }
     }
 

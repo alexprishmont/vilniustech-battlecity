@@ -1,7 +1,6 @@
 package lt.vilniustech.battlecity.graphics.gui.game;
 
-import lt.vilniustech.battlecity.Game;
-import lt.vilniustech.battlecity.graphics.game.map.Map;
+import lt.vilniustech.battlecity.game.Game;
 
 import javax.swing.*;
 import java.awt.*;
