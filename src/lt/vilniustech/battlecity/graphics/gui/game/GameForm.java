@@ -25,7 +25,6 @@ public class GameForm implements FormProvider {
         KeyState.subscribeEvent(KeyPressed.class, (EventListener<KeyPressed>) (event) -> {
             if (event.getPressedKey() == KeyEvent.VK_ESCAPE) {
                 GUI.getInstance().switchContentPane(new PauseForm(this));
-                StateManager.getInstance().setCurrentState(new PauseState());
             }
         });
 
