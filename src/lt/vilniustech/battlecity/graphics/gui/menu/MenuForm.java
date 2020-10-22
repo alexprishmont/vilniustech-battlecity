@@ -1,7 +1,7 @@
 package lt.vilniustech.battlecity.graphics.gui.menu;
 
 import lt.vilniustech.battlecity.game.states.MenuState;
-import lt.vilniustech.battlecity.game.states.StateManager;
+import lt.vilniustech.battlecity.game.StateManager;
 import lt.vilniustech.battlecity.graphics.gui.FormProvider;
 import lt.vilniustech.battlecity.graphics.gui.GUI;
 import lt.vilniustech.battlecity.graphics.gui.game.GameForm;

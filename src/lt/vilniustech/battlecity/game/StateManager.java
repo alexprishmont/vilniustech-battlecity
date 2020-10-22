@@ -1,4 +1,6 @@
-package lt.vilniustech.battlecity.game.states;
+package lt.vilniustech.battlecity.game;
+
+import lt.vilniustech.battlecity.game.states.State;
 
 public class StateManager {
     private static final StateManager instance = new StateManager();

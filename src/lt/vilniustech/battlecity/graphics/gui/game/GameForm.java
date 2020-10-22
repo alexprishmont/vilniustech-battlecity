@@ -5,7 +5,7 @@ import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
 import lt.vilniustech.battlecity.eventmanager.events.NoTanksLeft;
 import lt.vilniustech.battlecity.game.states.PauseState;
 import lt.vilniustech.battlecity.game.states.PlayState;
-import lt.vilniustech.battlecity.game.states.StateManager;
+import lt.vilniustech.battlecity.game.StateManager;
 import lt.vilniustech.battlecity.graphics.gui.finished.FinishedForm;
 import lt.vilniustech.battlecity.state.KeyState;
 import lt.vilniustech.battlecity.eventmanager.EventListener;
