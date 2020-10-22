@@ -3,6 +3,8 @@ package lt.vilniustech.battlecity.game;
 import lt.vilniustech.battlecity.entities.Entity;
 import lt.vilniustech.battlecity.entities.NonCollideable;
 import lt.vilniustech.battlecity.entities.player.ScoreEntity;
+import lt.vilniustech.battlecity.eventmanager.Event;
+import lt.vilniustech.battlecity.eventmanager.EventListener;
 import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.HomeDestroy;
 import lt.vilniustech.battlecity.eventmanager.events.NoTanksLeft;
@@ -18,7 +20,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Game {
-    private final static EventManager eventManager =
+    private final EventManager eventManager =
             new EventManager(TankKilled.class, HomeDestroy.class, NoTanksLeft.class);
     private static lt.vilniustech.battlecity.graphics.game.map.Map map;
     private final Map<Entity, Entity> entities = new ConcurrentHashMap<>();
@@ -34,11 +36,7 @@ public class Game {
         rules.put(new RulePlayerDied(), new RulePlayerDied());
     }
 
-    public static EventManager getEventManager() {
-        return eventManager;
-    }
-
-    public static lt.vilniustech.battlecity.graphics.game.map.Map getMap() {
+    public lt.vilniustech.battlecity.graphics.game.map.Map getMap() {
         return map;
     }
 
@@ -60,7 +58,7 @@ public class Game {
                 continue;
             }
 
-            getEventManager().notify(new NoTanksLeft(ScoreEntity.getScore()));
+            notifyGameEvent(new NoTanksLeft(ScoreEntity.getScore()));
             break;
         }
     }
@@ -84,6 +82,14 @@ public class Game {
                 break;
             }
         }
+    }
+
+    public void subscribeGameEvent(Class<? extends Event> eventType, EventListener<? extends Event> listener) {
+        eventManager.subscribe(eventType, listener);
+    }
+
+    public void notifyGameEvent(Event event) {
+        eventManager.notify(event);
     }
 
     public Map<Entity, Entity> getEntities() {

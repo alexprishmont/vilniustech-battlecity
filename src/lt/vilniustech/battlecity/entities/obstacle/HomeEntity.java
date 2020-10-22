@@ -14,7 +14,7 @@ public class HomeEntity extends Entity {
     @Override
     public void destroy() {
         super.destroy();
-        Game.getEventManager().notify(new HomeDestroy(ScoreEntity.getScore()));
+        game.notifyGameEvent(new HomeDestroy(ScoreEntity.getScore()));
     }
 
     @Override

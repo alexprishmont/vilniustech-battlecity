@@ -57,7 +57,9 @@ public class GUI extends JFrame {
         eventManager.subscribe(PaneChanged.class, (EventListener<PaneChanged>) (event) -> {
             if (event.getForm() instanceof GameForm) {
                 if (gameThread == null) {
-                    gameThread = new GameThread(new Game());
+                    Game game = new Game();
+                    ((GameForm) event.getForm()).setGame(game);
+                    gameThread = new GameThread(game);
                     gameThread.start();
                     return;
                 }

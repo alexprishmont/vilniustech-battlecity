@@ -1,5 +1,7 @@
 package lt.vilniustech.battlecity.state;
 
+import lt.vilniustech.battlecity.eventmanager.Event;
+import lt.vilniustech.battlecity.eventmanager.EventListener;
 import lt.vilniustech.battlecity.eventmanager.EventManager;
 import lt.vilniustech.battlecity.eventmanager.events.KeyPressed;
 
@@ -33,7 +35,7 @@ public class KeyState {
         }
     }
 
-    public static EventManager getEventManager() {
-        return eventManager;
+    public static void subscribeEvent(Class<? extends Event> eventType, EventListener<? extends Event> listener) {
+        eventManager.subscribe(eventType, listener);
     }
 }

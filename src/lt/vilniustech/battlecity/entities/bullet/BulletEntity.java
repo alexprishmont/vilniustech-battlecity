@@ -98,6 +98,6 @@ public class BulletEntity extends Entity {
             return;
         }
 
-        Game.getEventManager().notify(new TankKilled());
+        game.notifyGameEvent(new TankKilled());
     }
 }

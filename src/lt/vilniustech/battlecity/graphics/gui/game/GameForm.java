@@ -16,20 +16,30 @@ import java.awt.event.KeyEvent;
 
 public class GameForm implements FormProvider {
     private JPanel gamePanel;
+    private Game game;
 
     public GameForm() {
-        KeyState.getEventManager().subscribe(KeyPressed.class, (EventListener<KeyPressed>) (event) -> {
+        KeyState.subscribeEvent(KeyPressed.class, (EventListener<KeyPressed>) (event) -> {
             if (event.getPressedKey() == KeyEvent.VK_ESCAPE) {
                 GUI.getInstance().switchContentPane(new PauseForm(this));
             }
         });
+    }
 
-        Game.getEventManager().subscribe(HomeDestroy.class,
+    public void setGame(Game game) {
+        this.game = game;
+        init();
+    }
+
+    private void init() {
+        game.subscribeGameEvent(HomeDestroy.class,
                 (EventListener<HomeDestroy>) event ->
                         GUI.getInstance().switchContentPane(new FinishedForm(event.getScore())));
-        Game.getEventManager().subscribe(NoTanksLeft.class,
+        game.subscribeGameEvent(NoTanksLeft.class,
                 (EventListener<NoTanksLeft>) event ->
                         GUI.getInstance().switchContentPane(new FinishedForm(event.getScore())));
+
+        ((GamePanel) gamePanel).setGame(game);
     }
 
     private void createUIComponents() {
