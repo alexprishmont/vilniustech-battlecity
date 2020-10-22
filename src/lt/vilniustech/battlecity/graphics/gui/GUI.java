@@ -1,11 +1,6 @@
 package lt.vilniustech.battlecity.graphics.gui;
 
-import lt.vilniustech.battlecity.game.Game;
 import lt.vilniustech.battlecity.game.GameThread;
-import lt.vilniustech.battlecity.eventmanager.EventListener;
-import lt.vilniustech.battlecity.eventmanager.EventManager;
-import lt.vilniustech.battlecity.eventmanager.events.PaneChanged;
-import lt.vilniustech.battlecity.graphics.gui.game.GameForm;
 import lt.vilniustech.battlecity.graphics.gui.menu.MenuForm;
 import lt.vilniustech.battlecity.listeners.KeyListener;
 
@@ -14,11 +9,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class GUI extends JFrame {
-    private static final EventManager eventManager = new EventManager(PaneChanged.class);
     private static GUI instance = null;
     private FormProvider currentForm;
     private GameThread gameThread;
-
 
     private GUI() {
     }
@@ -52,32 +45,6 @@ public class GUI extends JFrame {
                     }
                     return false;
                 });
-
-
-        eventManager.subscribe(PaneChanged.class, (EventListener<PaneChanged>) (event) -> {
-            if (event.getForm() instanceof GameForm) {
-                if (gameThread == null) {
-                    Game game = new Game();
-                    ((GameForm) event.getForm()).setGame(game);
-                    gameThread = new GameThread(game);
-                    gameThread.start();
-                    return;
-                }
-                gameThread.unpause();
-                return;
-            }
-
-            if (event.getForm() instanceof MenuForm) {
-                if (gameThread != null) {
-                    gameThread.stop();
-                    gameThread = null;
-                    return;
-                }
-            }
-
-            assert gameThread != null;
-            gameThread.pause();
-        });
     }
 
     public void switchContentPane(FormProvider form) {
@@ -88,6 +55,13 @@ public class GUI extends JFrame {
         repaint();
         pack();
         currentForm = form;
-        eventManager.notify(new PaneChanged(form));
+    }
+
+    public GameThread getGameThread() {
+        return gameThread;
+    }
+
+    public void setGameThread(GameThread gameThread) {
+        this.gameThread = gameThread;
     }
 }

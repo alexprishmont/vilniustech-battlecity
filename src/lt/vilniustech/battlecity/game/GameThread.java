@@ -50,6 +50,10 @@ public class GameThread {
         paused = false;
     }
 
+    public Game getGame() {
+        return game;
+    }
+
     public void start() {
         if (!started) {
             started = true;
