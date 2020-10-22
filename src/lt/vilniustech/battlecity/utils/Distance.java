@@ -2,8 +2,6 @@ package lt.vilniustech.battlecity.utils;
 
 import lt.vilniustech.battlecity.entities.Entity;
 
-import java.util.List;
-
 public class Distance {
     public static float getDistance (Entity entity1, Entity entity2) {
         float deltaX = getDeltaX(entity1, entity2);

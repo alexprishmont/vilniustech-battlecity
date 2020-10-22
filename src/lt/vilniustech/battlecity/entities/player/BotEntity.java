@@ -86,8 +86,8 @@ public class BotEntity extends AbstractPlayerEntity {
     }
 
     private boolean moveX(Entity entity, float deltaTime) {
-        float signum = Math.signum(deltaX);
         float deltaX = Distance.getDeltaX(this, entity);
+        float signum = Math.signum(deltaX);
 
         if (Math.abs(deltaX) < 1) {
             return false;
