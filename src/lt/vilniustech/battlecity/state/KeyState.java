@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class KeyState {
     private static KeyState instance;
-    private Map<Character, State> keyStates = new ConcurrentHashMap<>();
+    private final Map<Character, State> keyStates = new ConcurrentHashMap<>();
     private static final EventManager eventManager = new EventManager(KeyPressed.class);
 
     private KeyState() {
